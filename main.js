@@ -10,7 +10,7 @@ function fetchData() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            questions = data.results;
+            questions = data.results.slice(0, numberOfQuestions);
             showQuestion();
         });
 };
