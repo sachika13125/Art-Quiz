@@ -14,15 +14,41 @@ function fetchData() {
         });
 };
 
+function showQuestion() {
+    if (currentQustionIndex < questions.length) {
+        const currentQuestion = questions[currentQustionIndex];
+        const questionDisplay = document.getElementById('question');
+        const answerBtn = document.querySelectorAll('.answer-btn');
+        const resultElement = document.getElementById('result');
+
+        questionDisplay.innerText = currentQuestion.question;
+
+        resultElement.style.display = 'none';
+        const answers = [...currentQuestion.incorrect_answers];
+        answers.splice(Math.floor(Math.random() * 4), 0, currentQuestion.correct_answer);
+
+        answerBtn.forEach((button, index) => {
+            button.innerText = answers[index];
+            button.addEventListener('click', () => checkAnswer(button.innerText));
+        });
+
+        document.getElementById('next-btn').style.display = 'none';
+    } else {
+        endQuiz();
+    }
+}
+
 function checkAnswer(selectedAnswer) {
     const currentQuestion = questions[currentQustionIndex];
     const resultElement = document.getElementById('result');
 
     if (selectedAnswer === currentQuestion.correct_answer) {
+        resultElement.style.display = 'block';
         resultElement.innerText = 'Correct!';
         resultElement.style.backgroundColor = 'green';
         score++;
     } else {
+        resultElement.style.display = 'block';
         resultElement.innerText = 'Wrong:('
         resultElement.style.backgroundColor = 'red';
     }
@@ -45,29 +71,14 @@ function endQuiz() {
     nextBtn.style.display = 'none';
 };
 
-function showQuestion() {
-    if (currentQustionIndex < questions.length) {
-        const currentQuestion = questions[currentQustionIndex];
-        const questionDisplay = document.getElementById('question');
-        const answerBtn = document.querySelectorAll('.answer-btn');
 
-        questionDisplay.innerText = currentQuestion.question;
-
-        const answers = [...currentQuestion.incorrect_answers];
-        answers.splice(Math.floor(Math.random() * 4), 0, currentQuestion.correct_answer);
-
-        answerBtn.forEach((button, index) => {
-            button.innerText = answers[index];
-            button.addEventListener('click', () => checkAnswer(button.innerText));
-        });
-
-        document.getElementById('next-btn').style.display = 'none';
-    } else {
-        endQuiz();
-    }
-}
 
 document.getElementById('next-btn').addEventListener('click', () => {
+    // Enable Answer Btn
+    const answerBtn = document.querySelectorAll('.answer-btn');
+    answerBtn.forEach(button => button.disabled = false);
+    
+
     currentQustionIndex++;
     showQuestion();
 });
