@@ -66,7 +66,7 @@ function endQuiz() {
     const resultElement = document.getElementById('result');
     const nextBtn = document.getElementById('next-btn');
 
-    questionDisplay.innerText = 'Completed! Your socore is' + score;
+    questionDisplay.innerText = 'Completed! Your socore is' + ' ' + score;
     answerBtn.forEach(button => button.style.display = 'none');
     resultElement.style.display = 'none';
     nextBtn.style.display = 'none';
