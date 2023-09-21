@@ -3,6 +3,7 @@
 let currentQustionIndex = 0;
 let score = 0;
 let questions = [];
+const numberOfQuestions = 5;
 const apiUrl = 'https://opentdb.com/api.php?amount=15&category=25&type=multiple';
 
 function fetchData() {
