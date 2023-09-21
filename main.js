@@ -15,15 +15,6 @@ function fetchData() {
         });
 };
 
-function startQuiz() {
-    // Select five questions randomly
-    questions = shuffle(questions).slice(0, numberOfQuestions);
-
-    currentQustionIndex = 0;
-    score = 0;
-    showQuestion();
-}
-
 function showQuestion() {
     if (currentQustionIndex < questions.length) {
         const currentQuestion = questions[currentQustionIndex];
