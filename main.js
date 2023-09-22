@@ -86,35 +86,35 @@ document.getElementById('next-btn').addEventListener('click', () => {
 
 fetchData();
 
-// Save the Quiz State
-function saveQuizState() {
-    const quizState = {
-      currentQuestionIndex: currentQuestionIndex,
-      score: score,
-    };
+// // Save the Quiz State
+// function saveQuizState() {
+//     const quizState = {
+//       currentQuestionIndex: currentQuestionIndex,
+//       score: score,
+//     };
   
-    // Convert into String and Save
-    localStorage.setItem('quizState', JSON.stringify(quizState));
-  }
+//     // Convert into String and Save
+//     localStorage.setItem('quizState', JSON.stringify(quizState));
+//   }
   
-  // Restore the Quiz State
-  function restoreQuizState() {
-    const quizStateString = localStorage.getItem('quizState');
+//   // Restore the Quiz State
+//   function restoreQuizState() {
+//     const quizStateString = localStorage.getItem('quizState');
   
-    if (quizStateString) {
-      const quizState = JSON.parse(quizStateString);
-      currentQuestionIndex = quizState.currentQuestionIndex;
-      score = quizState.score;
-    }
-  }
+//     if (quizStateString) {
+//       const quizState = JSON.parse(quizStateString);
+//       currentQuestionIndex = quizState.currentQuestionIndex;
+//       score = quizState.score;
+//     }
+//   }
   
-  // Restore the State When Page is Loaded
-  window.addEventListener('load', () => {
-    restoreQuizState();
-  });
+//   // Restore the State When Page is Loaded
+//   window.addEventListener('load', () => {
+//     restoreQuizState();
+//   });
   
-  // Save the State When Page is closed
-  window.addEventListener('beforeunload', () => {
-    saveQuizState();
-  });
+//   // Save the State When Page is closed
+//   window.addEventListener('beforeunload', () => {
+//     saveQuizState();
+//   });
   
