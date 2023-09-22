@@ -1,6 +1,6 @@
 
 //Get and initialize data
-let currentQustionIndex = 0;
+let currentQuestionIndex = 0;
 let score = 0;
 let questions = [];
 const numberOfQuestions = 5;
@@ -16,8 +16,8 @@ function fetchData() {
 };
 
 function showQuestion() {
-    if (currentQustionIndex < questions.length) {
-        const currentQuestion = questions[currentQustionIndex];
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
         const questionDisplay = document.getElementById('question');
         const answerBtn = document.querySelectorAll('.answer-btn');
         const resultElement = document.getElementById('result');
@@ -40,7 +40,7 @@ function showQuestion() {
 }
 
 function checkAnswer(selectedAnswer) {
-    const currentQuestion = questions[currentQustionIndex];
+    const currentQuestion = questions[currentQuestionIndex];
     const resultElement = document.getElementById('result');
 
     if (selectedAnswer === currentQuestion.correct_answer) {
@@ -80,10 +80,41 @@ document.getElementById('next-btn').addEventListener('click', () => {
     answerBtn.forEach(button => button.disabled = false);
     
 
-    currentQustionIndex++;
+    currentQuestionIndex++;
     showQuestion();
 });
 
 fetchData();
 
-
+// Save the Quiz State
+function saveQuizState() {
+    const quizState = {
+      currentQuestionIndex: currentQuestionIndex,
+      score: score,
+    };
+  
+    // Convert into String and Save
+    localStorage.setItem('quizState', JSON.stringify(quizState));
+  }
+  
+  // Restore the Quiz State
+  function restoreQuizState() {
+    const quizStateString = localStorage.getItem('quizState');
+  
+    if (quizStateString) {
+      const quizState = JSON.parse(quizStateString);
+      currentQuestionIndex = quizState.currentQuestionIndex;
+      score = quizState.score;
+    }
+  }
+  
+  // Restore the State When Page is Loaded
+  window.addEventListener('load', () => {
+    restoreQuizState();
+  });
+  
+  // Save the State When Page is closed
+  window.addEventListener('beforeunload', () => {
+    saveQuizState();
+  });
+  
