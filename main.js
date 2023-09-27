@@ -76,7 +76,6 @@ function endQuiz() {
     resultElement.style.display = 'none';
     nextBtn.style.display = 'none';
 
-    saveScore();
 };
 
 // Load Score
@@ -100,6 +99,7 @@ document.getElementById('next-btn').addEventListener('click', () => {
 
     currentQuestionIndex++;
     showQuestion();
+    saveScore();
     updateScoreDisplay()
 });
 
