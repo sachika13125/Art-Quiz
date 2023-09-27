@@ -1,10 +1,10 @@
-
 //Get and initialize data
 let currentQuestionIndex = 0;
 let score = 0;
 let questions = [];
 const numberOfQuestions = 5;
 const apiUrl = 'https://opentdb.com/api.php?amount=15&category=25&type=multiple';
+const scoreValue = document.getElementById('score-value');
 
 function fetchData() {
     fetch(apiUrl)
@@ -60,6 +60,11 @@ function checkAnswer(selectedAnswer) {
     answerBtn.forEach(button => button.disabled = true);
 };
 
+// Save Score
+function saveScore() {
+    localStorage.setItem('quizeScore', score);
+}
+
 function endQuiz() {
     const questionDisplay = document.getElementById('question');
     const answerBtn = document.querySelectorAll('.answer-btn');
@@ -70,9 +75,22 @@ function endQuiz() {
     answerBtn.forEach(button => button.style.display = 'none');
     resultElement.style.display = 'none';
     nextBtn.style.display = 'none';
+
+    saveScore();
 };
 
+// Load Score
+function loadScore() {
+    const savedScore = localStorage.getItem('quizScore');
+    if (savedScore !== null) {
+        score = parseInt(savedScore);
+    }
+}
 
+// Update Score
+function updateScoreDisplay() {
+    scoreValue.textContent = score;
+}
 
 document.getElementById('next-btn').addEventListener('click', () => {
     // Enable Answer Btn
@@ -82,39 +100,10 @@ document.getElementById('next-btn').addEventListener('click', () => {
 
     currentQuestionIndex++;
     showQuestion();
+    updateScoreDisplay()
 });
 
 fetchData();
 
-// // Save the Quiz State
-// function saveQuizState() {
-//     const quizState = {
-//       currentQuestionIndex: currentQuestionIndex,
-//       score: score,
-//     };
-  
-//     // Convert into String and Save
-//     localStorage.setItem('quizState', JSON.stringify(quizState));
-//   }
-  
-//   // Restore the Quiz State
-//   function restoreQuizState() {
-//     const quizStateString = localStorage.getItem('quizState');
-  
-//     if (quizStateString) {
-//       const quizState = JSON.parse(quizStateString);
-//       currentQuestionIndex = quizState.currentQuestionIndex;
-//       score = quizState.score;
-//     }
-//   }
-  
-//   // Restore the State When Page is Loaded
-//   window.addEventListener('load', () => {
-//     restoreQuizState();
-//   });
-  
-//   // Save the State When Page is closed
-//   window.addEventListener('beforeunload', () => {
-//     saveQuizState();
-//   });
+
   
