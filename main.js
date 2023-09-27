@@ -4,7 +4,10 @@ let score = 0;
 let questions = [];
 const numberOfQuestions = 5;
 const apiUrl = 'https://opentdb.com/api.php?amount=15&category=25&type=multiple';
+const answerBtn = document.querySelectorAll('.answer-btn');
 const scoreValue = document.getElementById('score-value');
+const restartBtn = document.getElementById('restart-btn')
+
 
 function fetchData() {
     fetch(apiUrl)
@@ -19,7 +22,6 @@ function showQuestion() {
     if (currentQuestionIndex < questions.length) {
         const currentQuestion = questions[currentQuestionIndex];
         const questionDisplay = document.getElementById('question');
-        const answerBtn = document.querySelectorAll('.answer-btn');
         const resultElement = document.getElementById('result');
 
         questionDisplay.innerText = currentQuestion.question;
@@ -34,6 +36,7 @@ function showQuestion() {
         });
 
         document.getElementById('next-btn').style.display = 'none';
+        restartBtn.style.display = 'none';
     } else {
         endQuiz();
     }
@@ -75,6 +78,7 @@ function endQuiz() {
     answerBtn.forEach(button => button.style.display = 'none');
     resultElement.style.display = 'none';
     nextBtn.style.display = 'none';
+    restartBtn.style.display = 'block';
 
 };
 
@@ -93,7 +97,6 @@ function updateScoreDisplay() {
 
 document.getElementById('next-btn').addEventListener('click', () => {
     // Enable Answer Btn
-    const answerBtn = document.querySelectorAll('.answer-btn');
     answerBtn.forEach(button => button.disabled = false);
     
 
@@ -101,6 +104,17 @@ document.getElementById('next-btn').addEventListener('click', () => {
     showQuestion();
     saveScore();
     updateScoreDisplay()
+});
+
+restartBtn.addEventListener('click', () => {
+
+    score = 0;
+    updateScoreDisplay();
+    currentQuestionIndex = 0;
+    showQuestion();
+    restartBtn.style.display = 'none';
+    answerBtn.forEach(button => button.style.display = 'inline');
+
 });
 
 fetchData();
