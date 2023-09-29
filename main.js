@@ -4,13 +4,9 @@ let score = 0;
 let questions = [];
 const numberOfQuestions = 5;
 const apiUrl = 'https://opentdb.com/api.php?amount=15&category=25&type=multiple';
-const questionDisplay = document.getElementById('question');
 const answerBtn = document.querySelectorAll('.answer-btn');
-const resultElement = document.getElementById('result');
-const nextBtn = document.getElementById('next-btn');
 const scoreValue = document.getElementById('score-value');
 const restartBtn = document.getElementById('restart-btn')
-const currentQuestion = questions[currentQuestionIndex];
 
 
 function fetchData() {
@@ -24,6 +20,10 @@ function fetchData() {
 
 function showQuestion() {
     if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        const questionDisplay = document.getElementById('question');
+        const resultElement = document.getElementById('result');
+        
         questionDisplay.innerText = currentQuestion.question;
 
         resultElement.style.display = 'none';
@@ -43,6 +43,9 @@ function showQuestion() {
 }
 
 function checkAnswer(selectedAnswer) {
+    const currentQuestion = questions[currentQuestionIndex];
+    const resultElement = document.getElementById('result');
+
     if (selectedAnswer === currentQuestion.correct_answer) {
         resultElement.style.display = 'block';
         resultElement.innerText = 'Correct!';
@@ -55,6 +58,8 @@ function checkAnswer(selectedAnswer) {
     }
 
     document.getElementById('next-btn').style.display = 'block';
+    
+    const answerBtn = document.querySelectorAll('.answer-btn');
     answerBtn.forEach(button => button.disabled = true);
 };
 
@@ -64,6 +69,11 @@ function saveScore() {
 }
 
 function endQuiz() {
+    const questionDisplay = document.getElementById('question');
+    const answerBtn = document.querySelectorAll('.answer-btn');
+    const resultElement = document.getElementById('result');
+    const nextBtn = document.getElementById('next-btn');
+
     questionDisplay.innerText = 'Completed! Your socore is' + ' ' + score;
     answerBtn.forEach(button => button.style.display = 'none');
     resultElement.style.display = 'none';
