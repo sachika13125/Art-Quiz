@@ -1,0 +1,49 @@
+{
+    "questions": [
+        {
+            "question": "How old was Vincent van Gogh when he started painting?",
+            "options": ["10","16","27","38"],
+            "answer":"27"
+        },
+        {
+            "question": "Who was Van Gogh's roommate?",
+            "options": ["Claude Monet","Paul Gauguin","Leonardo da Vinci","Egon Schiele"],
+            "answer":"Paul Gauguin"
+        },
+        {
+            "question": "What part of his body did Van Gogh cut off after an argument with Paul Gauguin?",
+            "options": ["ear","nose","finger","foot"],
+            "answer":"ear"
+        },
+        {
+            "question": "Who did Van Gogh correspond with throughout his life?",
+            "options": ["his mother","his teacher","his brother","his lover"],
+            "answer":"his brother"
+        },
+        {
+            "question": "When was Van Gogh borned?",
+            "options": ["1798","1901","1890","1853"],
+            "answer":"1853"
+        },
+        {
+            "question": "Where was Van Gogh borned?",
+            "options": ["Netherlands","Franch","German","Switzerland"],
+            "answer":"Netherlands"
+        },
+        {
+            "question": "What painting did Van Gogh describe as his best work?",
+            "options": ["the night cafe","the potato eaters","the starry night","the bedroom"],
+            "answer":"the potato eaters"
+        },
+        {
+            "question": "What is not a paintin of Van Gogh?",
+            "options": ["Japonism","Still Life","Cafe Terrace at Night","Water Lilies"],
+            "answer":"Water Lilies"
+        },
+        {
+            "question": "How many paintings were sold while Van Gogh was alive?",
+            "options": ["1","6","11","27"],
+            "answer":"1"
+        }
+    ]
+}
