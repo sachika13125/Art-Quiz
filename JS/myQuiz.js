@@ -1,66 +1,102 @@
 $(document).ready(function() {
-    console.log('Hello')
-
+    const apiUrl = 'https://the-trivia-api.com/api/questions?categories=arts_and_literature&limit=10&difficulty=easy&tags=art';
     let currentQuestion = 0;
     let score = 0;
+    let questions = [];
 
-    function displayQuestion(questionIndex) {
+    // Load Data from Web API
+    function loadQuizData() {
         $.ajax({
-            url: '../data/quiz.json',
-            dataType: 'json',
+            url: apiUrl,
+            method: 'GET',
             success: function(data) {
-                let quizData = data.questions;
-                $('#question').text(quizData[questionIndex].question);
-
-                let optionsList = $('#answer');
-                optionsList.empty();
-
-                quizData[questionIndex].options.forEach(function(option) {
-                    let li = $('<li></li>');
-                    li.text(option);
-                    li.click(checkAnswer);
-                    optionsList.append(li);
-                });
-            },
+                // Check if data can be get correctly
+                if (data && data.length > 0) {
+                    questions = data;
+                    displayQuestion(currentQuestion);
+                } else {
+                    alert('Can not get quiz data');
+                }
+            },            
             error: function() {
-                $('#question').text('Error');
-                $('#answer').empty();
+                alert('Failed to load data');
             }
         });
     }
 
-    function checkAnswer() {
-        let selectedOption = $('this').text();
-        if(selectedOption === quizData[currentQuestion].answer) {
+    // Display questions
+    function displayQuestion(questionIndex) {
+        if (questionIndex < questions.length) {
+            const currentQuiz = questions[questionIndex];
+            $("#question").text(currentQuiz.question.text);
+            const answerButtons = $(".answer-btn");
+
+            const answers = shuffleAnswers([
+                currentQuiz.correctAnswer,
+                ...currentQuiz.incorrectAnswers
+            ]);
+
+            for (let i = 0; i < 4; i++) {
+                answerButtons.eq(i).text(answers[i]);
+            }
+        } else {
+            showResult();
+        }
+    }
+
+    // Shuffle answers
+    function shuffleAnswers(answers) {
+        for(let i = answers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [answers[i], answers[j]] = [answers[j], answers[i]];
+        }
+        return answers;
+    }
+
+    // Check correct answer and update score
+    function checkAnswer(selectedAnswer) {
+        const currentQuiz = questions[currentQuestion];
+        if (selectedAnswer === currentQuiz.correctAnswer) {
             score++;
         }
-
         currentQuestion++;
-
-        if(currentQuestion < quizData.length) {
-            displayQuestion(currentQuestion);
-        } else {
-            showResult();
-        }
+        displayQuestion(currentQuestion);
     }
 
+    // Show the result
     function showResult() {
-        $('#question').text('Completed!');
-        $('#answer').empty();
-        $('#result').text('Your score is ' + score + '/' + quizData.length);
-        $('#next-btn').hide();
+        $("#question").text("Completed!");
+        $(".answer-btn").hide();
+        $("#result").text("Your score is " + score + "/" + questions.length);
+        $("#next-btn").hide();
+        $("#score-value").text(score);
+        $("#score").show();
+        $("#restart-btn").show();
     }
 
-    displayQuestion(currentQuestion);
+    // Start to load data
+    loadQuizData();
 
-    $('#next-btn').click(function() {
-        if(currentQuestion < quizData.length) {
-            displayQuestion(currentQuestion);
-        } else {
-            showResult();
-        }
+    // Click handler of Answer button
+    $(".answer-btn").click(function() {
+        const selectedAnswer = $(this).text();
+        checkAnswer(selectedAnswer);
     });
 
+    // Click handler of Next button
+    $("#next-btn").click(function() {
+        displayQuestion(currentQuestion);
+    });
 
-
+    // Click handler of Restart button
+    $("#restart-btn").click(function() {
+        currentQuestion = 0;
+        score = 0;
+        $("#score-value").text(score);
+        $("#score").hide();
+        $("#restart-btn").hide();
+        $(".answer-btn").show();
+        $("#next-btn").show();
+        displayQuestion(currentQuestion);
+    });
 });
