@@ -17,6 +17,8 @@ $(document).ready(function() {
                 } else {
                     alert('Can not get quiz data');
                 }
+                
+                console.log(data);
             },            
             error: function() {
                 alert('Failed to load data');
@@ -28,7 +30,7 @@ $(document).ready(function() {
     function displayQuestion(questionIndex) {
         if (questionIndex < questions.length) {
             const currentQuiz = questions[questionIndex];
-            $("#question").text(currentQuiz.question.text);
+            $("#question").text(currentQuiz.question);
             const answerButtons = $(".answer-btn");
 
             const answers = shuffleAnswers([
